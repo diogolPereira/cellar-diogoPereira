@@ -1,23 +1,17 @@
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import { useState } from 'react'
+import { Outlet } from 'react-router';
 import './App.scss'
+import Navbar from './layout/Navbar';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-     <Container component="main" sx={{ pt: 8, pb: 6 }}> 
-      <Typography
-        component="h1"
-        variant="h2"
-        align="center"
-        color="text.primary"
-      >
-        This will be the best beer/wine list app ever created.
-      </Typography>
-       
+      <Navbar/>
+      <Container maxWidth="xl" sx={{ pt: 8, pb: 6 }}> 
+        <Outlet/>
       </Container> 
     </div>
   )
