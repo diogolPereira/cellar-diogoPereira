@@ -1,4 +1,4 @@
-import React, { Fragment,useContext,useEffect,useState } from 'react'
+import React, { Fragment } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -6,32 +6,44 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useNavigate, useParams } from 'react-router';
-import { getBottle } from '../data/bottlesFake';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { BottleContext } from '../providers/BottleProvider';
 
 function BottleCreate() {
     /** Router Functions */
     const navigate = useNavigate()
     const params = useParams();
-
+    const location = useLocation();
+    console.log(location);
     /** State of Form */
-    const {dispatch} = React.useContext(BottleContext);
-    const[ bottle, setBottle] = React.useState((params && params.id) ? getBottle(params.id): {id:Math.floor(Math.random()*10000),name:'',price:''} );
+    const [isFormInvalid, setIsFormInvalid] = React.useState(false);
+
+    const {state,dispatch} = React.useContext(BottleContext);
+    const[ bottle, setBottle] = React.useState((params && params.id) ? state.bottles.find(x=> x.id == params.id): {id:Math.floor(Math.random()*10000),name:'',price:''} );
+    
     /** State of Dialog */
-    const[ dialogState, setDialogState] = useState(true);
+    const[ dialogState, setDialogState] = React.useState(true);
 
  
     /** Dynamic function for input change */
     const handleChange = (prop) => (event) => {
         setBottle({ ...bottle, [prop]: event.target.value });
       };
-   
-    /** Save data into array of data */
-    const handleSubmit = e => {
-        params.id ? dispatch({type:'edit',payload:bottle}) : dispatch({type:'add',payload:bottle})
-        handleClose()
+    /** Validate if bottle is valid */
+    const validateBottle = bottle => {
+        setIsFormInvalid(true)
+        if(!bottle.name) return false
+        if(!bottle.year) return false
+        if(!bottle.price) return false
+        return true
+    }
 
+    /** Save data into array of data */
+    const handleSubmit = () => {
+        if(validateBottle(bottle)){
+            params.id ? dispatch({type:'edit',payload:bottle}) : dispatch({type:'add',payload:bottle})
+            handleClose()
+        }
     }
     /** Close Dialog Without Save */
     const handleDelete = e => {
@@ -51,16 +63,19 @@ function BottleCreate() {
           <DialogContent>
             <TextField
               autoFocus
+              error = {!bottle.name && isFormInvalid}
               margin="dense"
               variant="standard"
               label="Nome da Garrafa"
               id="name"
               fullWidth
+              required
               onChange={handleChange('name')}
               value={bottle.name}
             />
             <TextField
               margin="dense"
+              error = {!bottle.price && isFormInvalid}
               variant="standard"
               label="Preço"
               InputProps={{
@@ -71,6 +86,17 @@ function BottleCreate() {
               fullWidth
               onChange={handleChange('price')}
               value={bottle.price}
+            />
+            <TextField
+              margin="dense"
+              variant="standard"
+              error = {!bottle.year && isFormInvalid}
+              label="Ano"
+              id="year"
+              type="number"
+              fullWidth
+              onChange={handleChange('year')}
+              value={bottle.year}
             />
           </DialogContent>
           <DialogActions>
