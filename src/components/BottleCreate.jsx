@@ -6,15 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import InputAdornment from '@mui/material/InputAdornment';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { BottleContext } from '../providers/BottleProvider';
 
 function BottleCreate() {
     /** Router Functions */
     const navigate = useNavigate()
     const params = useParams();
-    const location = useLocation();
-    console.log(location);
     /** State of Form */
     const [isFormInvalid, setIsFormInvalid] = React.useState(false);
 
@@ -71,7 +69,7 @@ function BottleCreate() {
               fullWidth
               required
               onChange={handleChange('name')}
-              value={bottle.name}
+              value={bottle.name || ''}
             />
             <TextField
               margin="dense"
@@ -85,7 +83,7 @@ function BottleCreate() {
               type="number"
               fullWidth
               onChange={handleChange('price')}
-              value={bottle.price}
+              value={bottle.price || 0}
             />
             <TextField
               margin="dense"
@@ -96,7 +94,7 @@ function BottleCreate() {
               type="number"
               fullWidth
               onChange={handleChange('year')}
-              value={bottle.year}
+              value={bottle.year || 0}
             />
           </DialogContent>
           <DialogActions>

@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import { getBottles } from '../data/bottlesFake';
 
 export const BottleContext = React.createContext();
@@ -35,17 +35,24 @@ function BottleReducer(state, action) {
 
   
 function BottleProvider({children}) {
-    const [state, dispatch] = React.useReducer(BottleReducer, {bottles: getBottles()})
-    // NOTE: you *might* need to memoize this value
-    // Learn more in http://kcd.im/optimize-context
+    /** StatePresist data in device storage */
+    const [state, dispatch] = React.useReducer(BottleReducer, {bottles: []},()=>{
+        const localData = localStorage.getItem('bottles')
+        return { bottles: localData ? JSON.parse(localData) : getBottles()}
+    })
     const value = {state, dispatch}
-  return (
-    <BottleContext.Provider
-      value={value}
-    >
-      {children}
-    </BottleContext.Provider>
-  );
+
+    useEffect(()=> {
+        localStorage.setItem('bottles',JSON.stringify(state.bottles))
+    },[state.bottles])
+
+    return (
+      <BottleContext.Provider
+        value={value}
+      >
+        {children}
+      </BottleContext.Provider>
+    );
 }
 
 export default BottleProvider
