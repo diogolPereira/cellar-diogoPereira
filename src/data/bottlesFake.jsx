@@ -10,19 +10,19 @@ let bottlesData = [
         id:2,
         name:'Garrafa de Vinho Branco',
         price:20,
-        year:2022
+        year:2017
     },
     {
         id:3,
-        name:'Arroz',
+        name:'Cerveja',
         price:1,
-        year:2022
+        year:1999
     },
     {
         id:4,
-        name:'Bonecos',
-        price:4,
-        year:2022
+        name:'Garrafa de Vinho Tinto',
+        price:23,
+        year:2018
     },
 ]
 
