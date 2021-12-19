@@ -1,10 +1,3 @@
-<div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Cellar" />
-
-  &#xa0;
-
-  <!-- <a href="https://cellar.netlify.app">Demo</a> -->
-</div>
 
 <h1 align="center">Cellar</h1>
 
@@ -46,23 +39,32 @@
 
 ## :dart: About ##
 
-Describe your project
+This is a simple app for managing bottles. This app is been created with vite and React.
+
+For the style of app I decide use MUI because simplicty of we can make a design responsive and clean.
+
+The app use react router(v6) for navigation inside.
+
+For the state managemnt I opt for go with react hooks where I create a global context with list of bottles,
+inside the components I use the useState for control the component.
+
+The app use localStorage for presist the data in device.
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Create Read Update and Delete bottles;\
+:heavy_check_mark: Order Table and details page;\
+:heavy_check_mark: Use a state managment for control the state of app;\
+:heavy_check_mark: Data presist on device;
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
 - [Node.js](https://nodejs.org/en/)
+- [Vite](https://vitejs.dev/)
+- [MUI](https://mui.com/)
 - [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
 
 ## :white_check_mark: Requirements ##
 
