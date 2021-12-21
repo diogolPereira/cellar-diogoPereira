@@ -29,7 +29,6 @@ function BottleCreate() {
       };
     /** Validate if bottle is valid */
     const validateBottle = bottle => {
-        setIsFormInvalid(true)
         if(!bottle.name) return false
         if(!bottle.year) return false
         if(!bottle.price) return false
@@ -41,6 +40,8 @@ function BottleCreate() {
         if(validateBottle(bottle)){
             params.id ? dispatch({type:'edit',payload:bottle}) : dispatch({type:'add',payload:bottle})
             handleClose()
+        } else {
+          setIsFormInvalid(true)
         }
     }
     /** Close Dialog Without Save */
