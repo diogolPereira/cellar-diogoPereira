@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -16,7 +16,7 @@ function BottleCreate() {
     /** State of Form */
     const [isFormInvalid, setIsFormInvalid] = React.useState(false);
 
-    const {state,dispatch} = React.useContext(BottleContext);
+    const {state,dispatch} = useContext(BottleContext);
     const[ bottle, setBottle] = React.useState((params && params.id) ? state.bottles.find(x=> x.id == params.id): {id:Math.floor(Math.random()*10000),name:'',price:''} );
     
     /** State of Dialog */

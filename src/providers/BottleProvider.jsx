@@ -42,8 +42,12 @@ function BottleProvider({children}) {
     })
     const value = {state, dispatch}
 
+
     useEffect(()=> {
+      setTimeout(() => {
         localStorage.setItem('bottles',JSON.stringify(state.bottles))
+      }, 100);
+        
     },[state.bottles])
 
     return (

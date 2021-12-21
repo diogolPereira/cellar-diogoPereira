@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,7 +15,7 @@ function BottleDetail() {
     const navigate = useNavigate();
     const params = useParams();
 
-    const {state,dispatch} = React.useContext(BottleContext);
+    const {state,dispatch} = useContext(BottleContext);
     const[ bottle, setBottle] = React.useState( state.bottles.find(x=> x.id == params.id));
 
     /** State of Dialog */
@@ -44,9 +44,9 @@ function BottleDetail() {
           <DialogContent>
           <Grid container >
             <Grid item xs={12} align=""> 
-               <Typography variant="h6" gutterBottom> Nome: <span class="font-weight-light">{bottle.name}</span></Typography>
-               <Typography variant="h6" gutterBottom> Ano: <span class="font-weight-light">{bottle.year}</span></Typography>
-               <Typography variant="h6" gutterBottom> Preço: <span class="font-weight-light">{bottle.price}€</span></Typography>
+               <Typography variant="h6" gutterBottom> Nome: <span className="font-weight-light">{bottle.name}</span></Typography>
+               <Typography variant="h6" gutterBottom> Ano: <span className="font-weight-light">{bottle.year}</span></Typography>
+               <Typography variant="h6" gutterBottom> Preço: <span className="font-weight-light">{bottle.price}€</span></Typography>
             </Grid>
           </Grid>
           </DialogContent>
