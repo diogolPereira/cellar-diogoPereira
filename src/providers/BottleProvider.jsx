@@ -19,7 +19,7 @@ function BottleReducer(state, action) {
         case 'edit': {
             const index = state.bottles.findIndex(x => x.id == action.payload.id);
             if(index == -1){ throw new Error(`Id of bottle not found: ${action.payload.id}`)}
-            const newBottles = state.bottles;
+            const newBottles = [...state.bottles];
             newBottles[index] = action.payload
             return {bottles:newBottles}
         } 
