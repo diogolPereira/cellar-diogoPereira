@@ -8,8 +8,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate, useParams } from 'react-router';
 import { BottleContext } from '../providers/BottleProvider';
-
 function BottleCreate() {
+    const year = new Date().getFullYear()
+  
     /** Router Functions */
     const navigate = useNavigate()
     const params = useParams();
@@ -27,11 +28,25 @@ function BottleCreate() {
     const handleChange = (prop) => (event) => {
         setBottle({ ...bottle, [prop]: event.target.value });
       };
+
+    
     /** Validate if bottle is valid */
+    const validateYear = () => {
+      if(!bottle.year) return false
+      if(bottle.year < 0) return false
+      if(bottle.year > year) return false
+      return true
+    }
+    const validatePrice = () => {
+      if(!bottle.price) return false
+      if(bottle.price < 0) return false
+      return true
+    }  
     const validateBottle = bottle => {
         if(!bottle.name) return false
-        if(!bottle.year) return false
-        if(!bottle.price) return false
+        if(!validateYear()) return false
+        if(!validatePrice()) return false
+
         return true
     }
 
@@ -74,11 +89,12 @@ function BottleCreate() {
             />
             <TextField
               margin="dense"
-              error = {!bottle.price && isFormInvalid}
+              error = {(!validatePrice()) && isFormInvalid}
               variant="standard"
               label="Preço"
               InputProps={{
-                endAdornment:<InputAdornment position="start"> € </InputAdornment>
+                endAdornment:<InputAdornment position="start"> € </InputAdornment>,
+                inputProps: { min: 0} 
               }}
               id="price"
               type="number"
@@ -89,10 +105,11 @@ function BottleCreate() {
             <TextField
               margin="dense"
               variant="standard"
-              error = {!bottle.year && isFormInvalid}
+              error = {(!validateYear()) && isFormInvalid}
               label="Ano"
               id="year"
               type="number"
+              InputProps={{ inputProps: { min: 0, max: year } }}
               fullWidth
               onChange={handleChange('year')}
               value={bottle.year || 0}
